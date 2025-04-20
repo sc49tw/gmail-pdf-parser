@@ -15,6 +15,14 @@ from googleapiclient.discovery import build
 from email import message_from_bytes
 from google.auth.transport.requests import Request
 
+# 從環境變數還原 client_secret.json（for Railway）
+if not os.path.exists("client_secret.json"):
+    json_str = os.getenv("GOOGLE_CREDENTIALS_JSON")
+    if json_str:
+        with open("client_secret.json", "w") as f:
+            f.write(json_str)
+
+
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
 
 # === 取得 Gmail API 認證服務 ===
